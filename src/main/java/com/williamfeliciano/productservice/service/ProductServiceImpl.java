@@ -1,6 +1,7 @@
 package com.williamfeliciano.productservice.service;
 
 import com.williamfeliciano.productservice.entity.Product;
+import com.williamfeliciano.productservice.exception.ProductServiceCustomException;
 import com.williamfeliciano.productservice.model.ProductRequest;
 import com.williamfeliciano.productservice.model.ProductResponse;
 import com.williamfeliciano.productservice.repository.ProductRepository;
@@ -36,7 +37,7 @@ public class ProductServiceImpl implements ProductService{
         log.info("Get the product for productId: {}", productId);
         Product product = productRepository
                 .findById(productId)
-                .orElseThrow(()-> new RuntimeException("Product with given id not found"));
+                .orElseThrow(()-> new ProductServiceCustomException("Product with given id not found","404 Product Not Found"));
         ProductResponse productResponse = new ProductResponse();
         copyProperties(product, productResponse);
         return productResponse;
